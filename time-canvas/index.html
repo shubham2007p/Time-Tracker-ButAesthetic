@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Time Canvas - A minimalist, calm visualization of the passage of time. Inspired by Nothing OS and Dieter Rams.">
+  <title>Time Canvas</title>
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  
+  <div class="app-container">
+    <!-- Theme Toggle -->
+    <div class="theme-toggle-container">
+      <button id="theme-btn" class="theme-btn" aria-label="Toggle Theme" title="Toggle Theme" tabindex="0">
+        <!-- Sun Icon -->
+        <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <!-- Moon Icon -->
+        <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Main Time Header -->
+    <header class="header" role="banner">
+      <h1 id="time-day" class="time-day">Friday</h1>
+      <div id="time-date" class="time-date">17 July 2026</div>
+    </header>
+
+    <!-- Progress Arc Indicator -->
+    <div class="arc-wrapper">
+      <div class="progress-arc-container">
+        <svg class="progress-arc-svg" viewBox="0 0 200 130">
+          <path class="arc-bg" d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke-linecap="round" />
+          <path id="progress-arc-fill" class="arc-fill" d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke-linecap="round" stroke-dasharray="251.327" stroke-dashoffset="251.327" />
+        </svg>
+        <div class="arc-inner-content">
+          <div id="arc-percentage" class="arc-percentage">0%</div>
+          <div id="arc-label" class="arc-label">TODAY</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Statistics -->
+    <div id="stats-container" class="stats-container" aria-live="polite">
+      <!-- Minimal stats will load here -->
+    </div>
+
+    <!-- Mode Switch (Shown/Hidden dynamically) -->
+    <div id="mode-switch-container" class="mode-switch-container hidden">
+      <div class="mode-switch-indicator"></div>
+      <button id="mode-days" class="mode-btn active" data-mode="days" tabindex="0">Days</button>
+      <button id="mode-hours" class="mode-btn" data-mode="hours" tabindex="0">Hours</button>
+    </div>
+
+    <!-- Grid Canvas Visualization -->
+    <main class="main-content" role="main">
+      <div class="visualization-wrapper">
+        <div id="grid-container" class="grid-container active" aria-live="polite">
+          <!-- Dots dynamically rendered here -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav" role="tablist" aria-label="Views">
+      <div id="nav-indicator" class="nav-indicator"></div>
+      <button class="nav-item active" data-route="day" role="tab" aria-selected="true" tabindex="0">Day</button>
+      <button class="nav-item" data-route="week" role="tab" aria-selected="false" tabindex="0">Week</button>
+      <button class="nav-item" data-route="month" role="tab" aria-selected="false" tabindex="0">Month</button>
+      <button class="nav-item" data-route="year" role="tab" aria-selected="false" tabindex="0">Year</button>
+    </nav>
+  </div>
+
+  <!-- Main Application Logic -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

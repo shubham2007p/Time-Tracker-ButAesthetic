@@ -1,0 +1,228 @@
+/* Responsive Scaling & Layout adjustments */
+
+/* Default Sizes (Large screen/4K support) */
+:root {
+  --day-dot-size: 48px;
+  --day-dot-gap: 24px;
+  
+  --week-dot-size: 16px;
+  --week-dot-gap: 6px;
+  
+  --month-dot-size: 32px;
+  --month-dot-gap: 14px;
+  
+  --year-dot-size: 10px;
+  --year-dot-gap: 4px;
+
+  /* Hours mode variables */
+  --hour-dot-size: 3px;
+  --hour-dot-gap: 1px;
+}
+
+/* Connect CSS classes to responsive variables */
+.day-grid {
+  grid-template-columns: repeat(6, var(--day-dot-size)) !important;
+  gap: var(--day-dot-gap) !important;
+}
+
+.week-grid {
+  grid-template-columns: repeat(24, var(--week-dot-size)) !important;
+  gap: var(--week-dot-gap) !important;
+}
+
+.month-grid {
+  grid-template-columns: repeat(7, var(--month-dot-size)) !important;
+  gap: var(--month-dot-gap) !important;
+}
+
+/* Month Hours view */
+.month-hours-grid {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr) !important;
+  gap: 10px !important;
+  width: 100%;
+  max-width: 600px;
+}
+
+.day-hours-cell {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--hour-dot-gap);
+  border: 1px solid var(--dot-border);
+  border-radius: 4px;
+  padding: 4px;
+  background-color: var(--bg-panel);
+  aspect-ratio: 1.2 / 1;
+  align-content: center;
+}
+
+.day-hours-cell .dot {
+  width: var(--hour-dot-size) !important;
+  height: var(--hour-dot-size) !important;
+  border-width: 0.5px !important;
+}
+
+/* Year view (Months grouping) */
+.year-months-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-lg);
+  width: 100%;
+  max-width: 1000px;
+}
+
+.year-month-card {
+  border: 1px solid var(--dot-border);
+  border-radius: 8px;
+  padding: 10px;
+  background-color: var(--bg-panel);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.year-month-title {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-sm);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.year-month-days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 8px);
+  gap: 3px;
+}
+
+.year-month-days-grid .dot {
+  width: 8px !important;
+  height: 8px !important;
+  border-width: 0.5px;
+}
+
+/* Year Hours mode */
+.year-month-hours-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+  width: 100%;
+}
+
+.year-month-hours-grid .day-hours-cell {
+  padding: 1.5px;
+  gap: 0.5px;
+  border-radius: 2px;
+}
+
+.year-month-hours-grid .day-hours-cell .dot {
+  width: 2px !important;
+  height: 2px !important;
+  border: none !important;
+}
+
+/* Tablet / Medium Screens (max-width: 900px) */
+@media (max-width: 900px) {
+  :root {
+    --day-dot-size: 40px;
+    --day-dot-gap: 18px;
+    
+    --week-dot-size: 10px;
+    --week-dot-gap: 4px;
+    
+    --month-dot-size: 26px;
+    --month-dot-gap: 10px;
+
+    --hour-dot-size: 2.5px;
+    --hour-dot-gap: 0.8px;
+  }
+  
+  .year-months-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+  }
+  
+  .time-day {
+    font-size: 3rem;
+  }
+}
+
+/* Mobile Screens (max-width: 600px) */
+@media (max-width: 600px) {
+  .year-months-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+  }
+  
+  .year-month-days-grid {
+    grid-template-columns: repeat(7, 6px);
+    gap: 2px;
+  }
+  
+  .year-month-days-grid .dot {
+    width: 6px !important;
+    height: 6px !important;
+  }
+}
+
+/* Mobile Screens (max-width: 480px) */
+@media (max-width: 480px) {
+  :root {
+    --day-dot-size: 32px;
+    --day-dot-gap: 12px;
+    
+    --week-dot-size: 7px;
+    --week-dot-gap: 2.5px;
+    
+    --month-dot-size: 18px;
+    --month-dot-gap: 8px;
+
+    --hour-dot-size: 1.8px;
+    --hour-dot-gap: 0.5px;
+  }
+  
+  .year-months-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .time-day {
+    font-size: 2.2rem;
+  }
+  
+  .nav-item {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+
+  .stats-container {
+    gap: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .stat-val {
+    font-size: 0.95rem;
+  }
+
+  .stat-lbl {
+    font-size: 0.58rem;
+  }
+}
+
+/* Tiny Mobile Screens (max-width: 340px) */
+@media (max-width: 340px) {
+  :root {
+    --day-dot-size: 28px;
+    --day-dot-gap: 10px;
+    
+    --week-dot-size: 6px;
+    --week-dot-gap: 2px;
+    
+    --month-dot-size: 16px;
+    --month-dot-gap: 6px;
+  }
+
+  .year-months-container {
+    grid-template-columns: 1fr;
+  }
+}
