@@ -14,40 +14,55 @@ export function renderMonthView(container, date, mode = 'days') {
 
   if (mode === 'hours') {
     // Mode Hours: 24 dots for every day
-    const groups = [];
-    
+    if (container.className !== 'grid-container month-hours-grid') {
+      container.className = 'grid-container month-hours-grid';
+      container.innerHTML = '';
+    }
+
+    const existingCells = container.children;
+    if (existingCells.length !== totalDays) {
+      container.innerHTML = '';
+      const fragment = document.createDocumentFragment();
+      for (let d = 1; d <= totalDays; d++) {
+        const cell = document.createElement('div');
+        cell.className = 'day-hours-cell';
+        for (let h = 0; h < 24; h++) {
+          const dot = document.createElement('div');
+          dot.className = 'dot';
+          cell.appendChild(dot);
+        }
+        fragment.appendChild(cell);
+      }
+      container.appendChild(fragment);
+    }
+
+    // Diff and update hourly dots inside cells
     for (let d = 1; d <= totalDays; d++) {
-      const dayDots = [];
+      const cell = existingCells[d - 1];
+      const dots = cell.children;
       const isPastDay = d < currentDay;
       const isToday = d === currentDay;
-      
+
       for (let h = 0; h < 24; h++) {
-        let status = 'future';
-        let statusText = 'Future hour';
+        const dot = dots[h];
+        let targetClass = 'dot';
         
         if (isPastDay || (isToday && h < currentHour)) {
-          status = 'completed';
-          statusText = 'Completed hour';
+          targetClass = 'dot completed';
         } else if (isToday && h === currentHour) {
-          status = 'current';
-          statusText = 'Current hour';
+          targetClass = 'dot current';
         }
-        
-        const displayHour = h === 0 ? '12 AM' : h === 12 ? '12 PM' : h > 12 ? `${h - 12} PM` : `${h} AM`;
-        dayDots.push({
-          status,
-          label: `${monthNames[month]} ${d}, ${displayHour}: ${statusText}`
-        });
+
+        if (dot.className !== targetClass) {
+          dot.className = targetClass;
+        }
+
+        const label = `${monthNames[month]} ${d}, hour ${h}: ${isPastDay || (isToday && h < currentHour) ? 'Completed' : (isToday && h === currentHour) ? 'Current' : 'Future'}`;
+        if (dot.getAttribute('aria-label') !== label) {
+          dot.setAttribute('aria-label', label);
+        }
       }
-      
-      groups.push({
-        id: d,
-        title: `${d}`,
-        dots: dayDots
-      });
     }
-    
-    DotRenderer.renderGrouped(container, groups, 'grid-container month-hours-grid', 'day-hours-cell', 'day-hours-grid');
   } else {
     // Mode Days (default)
     const dots = [];

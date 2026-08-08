@@ -10,6 +10,7 @@ export class TimeCoordinator {
   }
 
   start() {
+    if (this.intervalId) return;
     this.tick();
     
     // Check every 1000ms for high precision alignment, but we only notify when time fields change

@@ -8,6 +8,7 @@
   --text-color: #0F0F0F;
   --text-muted: #7C7C7C;
   --dot-completed: var(--color-accent);
+  --color-focus: #32523B;
   --dot-current: #7C7C7C;
   --dot-future: #FFFFFF;
   --dot-border: rgba(15, 15, 15, 0.15);
@@ -37,6 +38,7 @@
   --text-color: #F5F5F5;
   --text-muted: #888888;
   --dot-completed: var(--color-accent);
+  --color-focus: #1E3224;
   --dot-current: #888888;
   --dot-future: #1A1A1A;
   --dot-border: rgba(255, 255, 255, 0.08);
