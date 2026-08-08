@@ -147,6 +147,9 @@ export class FocusPanelManager {
         return;
       }
 
+      this.lastCommitMessage = commits[0].commit.message.split('\n')[0];
+      this.updateUI();
+
       const escapeHTML = (str) => str.replace(/[&<>'"]/g, 
         tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
       );
@@ -380,7 +383,9 @@ export class FocusPanelManager {
         this.selectedProgress.classList.remove('hidden');
       }
     } else {
-      if (this.selectedTitle) this.selectedTitle.textContent = 'Select a task first';
+      if (this.selectedTitle) {
+        this.selectedTitle.textContent = this.lastCommitMessage ? `Commit: ${this.lastCommitMessage}` : 'Select a task first';
+      }
       if (this.selectedProgress) this.selectedProgress.classList.add('hidden');
     }
 
