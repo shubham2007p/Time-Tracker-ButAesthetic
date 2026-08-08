@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Time Canvas - A minimalist, calm visualization of the passage of time. Inspired by Nothing OS and Dieter Rams.">
+  <meta name="description"
+    content="Time Canvas - A minimalist, calm visualization of the passage of time. Inspired by Nothing OS and Dieter Rams.">
   <title>Time Canvas</title>
-  
+
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
@@ -14,21 +16,34 @@
   <link rel="stylesheet" href="css/themes.css">
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/focus-panel.css">
 </head>
+
 <body>
-  
+
   <div class="app-container">
-    <!-- Theme Toggle -->
-    <div class="theme-toggle-container">
+    <!-- Top-Right Controls -->
+    <div class="top-controls-container">
       <button id="theme-btn" class="theme-btn" aria-label="Toggle Theme" title="Toggle Theme" tabindex="0">
         <!-- Sun Icon -->
         <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/>
-          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none" />
+          <path
+            d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
         <!-- Moon Icon -->
         <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" fill="none"
+            stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+
+      <button id="menu-btn" class="menu-btn" aria-label="Open Focus Panel" title="Open Focus Panel" tabindex="0">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <line x1="4" y1="6" x2="20" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          <line x1="4" y1="18" x2="20" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
         </svg>
       </button>
     </div>
@@ -44,7 +59,10 @@
       <div class="progress-arc-container">
         <svg class="progress-arc-svg" viewBox="0 0 200 130">
           <path class="arc-bg" d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke-linecap="round" />
-          <path id="progress-arc-fill" class="arc-fill" d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke-linecap="round" stroke-dasharray="251.327" stroke-dashoffset="251.327" />
+          <path id="progress-arc-fill" class="arc-fill" d="M 20 110 A 80 80 0 0 1 180 110" fill="none"
+            stroke-linecap="round" stroke-dasharray="251.327" stroke-dashoffset="251.327" />
+          <path id="progress-arc-focus" class="arc-focus" d="M 20 110 A 80 80 0 0 1 180 110" fill="none"
+            stroke-linecap="round" stroke-dasharray="251.327" stroke-dashoffset="251.327" />
         </svg>
         <div class="arc-inner-content">
           <div id="arc-percentage" class="arc-percentage">0%</div>
@@ -84,7 +102,142 @@
     </nav>
   </div>
 
+  <!-- Panel Dimming Overlay -->
+  <div id="panel-overlay" class="panel-overlay" aria-hidden="true"></div>
+
+  <!-- Focus Panel -->
+  <aside id="focus-panel" class="focus-panel" role="complementary" aria-label="Focus Panel" aria-hidden="true"
+    tabindex="-1">
+    <div class="panel-header">
+      <h2>Focus Panel</h2>
+      <button id="panel-close-btn" class="panel-close-btn" aria-label="Close Focus Panel">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="panel-content">
+      <!-- TODOS Section -->
+      <section class="panel-section" aria-labelledby="todos-heading">
+        <h3 id="todos-heading" class="section-title">TODOS</h3>
+
+        <!-- Task Input -->
+        <div class="task-input-container">
+          <span class="plus-icon">+</span>
+          <input type="text" id="task-input" class="task-input" placeholder="What are you focusing on?"
+            aria-label="Add new task">
+        </div>
+
+        <!-- Task List -->
+        <ul id="task-list" class="task-list" aria-live="polite">
+          <!-- Incomplete tasks here -->
+        </ul>
+
+        <!-- Completed tasks accordion -->
+        <div id="completed-accordion" class="completed-accordion hidden">
+          <button id="toggle-completed-btn" class="toggle-completed-btn" aria-expanded="false">
+            Show Completed (<span id="completed-count">0</span>)
+          </button>
+          <ul id="completed-task-list" class="task-list completed-task-list hidden" aria-live="polite">
+            <!-- Completed tasks here -->
+          </ul>
+        </div>
+      </section>
+
+      <!-- POMODORO Section -->
+      <section class="panel-section" aria-labelledby="pomodoro-heading">
+        <h3 id="pomodoro-heading" class="section-title">POMODORO</h3>
+
+        <!-- Selected Task Panel Status -->
+        <div id="selected-task-panel" class="selected-task-panel">
+          <div class="focus-label">Current Focus</div>
+          <div id="selected-task-title" class="selected-task-title">Select a task first</div>
+          <div id="selected-task-progress" class="selected-task-progress hidden">0 / 0 Pomodoros</div>
+        </div>
+
+        <!-- Timer View -->
+        <div class="timer-container">
+          <div id="timer-display" class="timer-display">25:00</div>
+        </div>
+
+        <!-- Timer Progress Line with Spark -->
+        <div class="timer-progress-container">
+          <div class="timer-progress-line">
+            <div id="timer-progress-fill" class="timer-progress-fill" style="width: 0%;"></div>
+            <div id="timer-progress-spark" class="timer-progress-spark" style="left: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Mode segmented switcher -->
+        <div id="timer-modes" class="timer-modes">
+          <button class="timer-mode-btn active" data-mode="work">WORK</button>
+          <button class="timer-mode-btn" data-mode="break">BREAK</button>
+          <button class="timer-mode-btn" data-mode="longBreak">LONG BREAK</button>
+        </div>
+
+        <!-- Controls -->
+        <div class="timer-controls">
+          <button id="primary-timer-btn" class="primary-timer-btn disabled" disabled>START</button>
+          <button id="reset-timer-btn" class="reset-timer-btn hidden" aria-label="Reset Timer">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l.73-.73" fill="none" stroke="currentColor"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- Session Statistics Section -->
+      <section class="panel-section" aria-labelledby="stats-heading">
+        <h3 id="stats-heading" class="section-title">TODAY'S STATS</h3>
+        <div class="focus-stats-grid">
+          <div class="focus-stat-item">
+            <span id="stat-completed-poms" class="focus-stat-val">0</span>
+            <span class="focus-stat-lbl">Pomodoros Completed</span>
+          </div>
+          <div class="focus-stat-item">
+            <span id="stat-focus-time" class="focus-stat-val">0m</span>
+            <span class="focus-stat-lbl">Focused Time</span>
+          </div>
+          <div class="focus-stat-item">
+            <span id="stat-break-time" class="focus-stat-val">0m</span>
+            <span class="focus-stat-lbl">Break Time</span>
+          </div>
+          <div class="focus-stat-item">
+            <span id="stat-completion-pct" class="focus-stat-val">0%</span>
+            <span class="focus-stat-lbl">Task Completion %</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMMITS Section -->
+      <section class="panel-section" aria-labelledby="commits-heading">
+        <h3 id="commits-heading" class="section-title">RECENT COMMITS</h3>
+        <div id="commits-container" class="commits-container">
+          <span class="muted-text">Loading commits...</span>
+        </div>
+      </section>
+
+      <!-- SETTINGS Section Placeholder (Future Ready) -->
+      <section class="panel-section" aria-labelledby="settings-heading">
+        <h3 id="settings-heading" class="section-title">SETTINGS</h3>
+        <div class="settings-placeholder">
+          <span class="muted-text">Custom duration options and preferences will be available in a future update.</span>
+        </div>
+      </section>
+    </div>
+  </aside>
+
+  <!-- In-page Notification banner -->
+  <div id="focus-notification" class="focus-notification hidden" role="status" aria-live="polite">
+    <span id="notification-message"></span>
+  </div>
+
   <!-- Main Application Logic -->
-  <script type="module" src="js/app.js"></script>
+
+  <script src="js/app.js?v=101"></script>
 </body>
+
 </html>
